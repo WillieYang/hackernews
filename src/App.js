@@ -4,15 +4,18 @@ import './App.css';
 
 class App extends Component {
   render() {
+    const helloWorld = "Welcome to the World of React";
+    const username = {
+        firstName: 'Sheng',
+        lastName: 'Yang',
+    };
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <h2>{ helloWorld }</h2>
+        <p>{username.firstName} {username.lastName}</p>
       </div>
     );
   }
