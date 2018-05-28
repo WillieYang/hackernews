@@ -22,6 +22,11 @@ const list = [
 ];
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { list };
+  }
+  
   render() {
     const helloWorld = "Welcome to the World of React";
     const username = {
@@ -36,7 +41,7 @@ class App extends Component {
         <h2>{ helloWorld }</h2>
         <p>{username.firstName} {username.lastName}</p>
         {
-          list.map(item =>
+          this.state.list.map(item =>
               <div key={item.objectID}>
                 <span>
                   <a href={item.url}>{item.title}</a>
