@@ -20,17 +20,25 @@ const list = [
     objectID: 1,
   }
 ];
+const searchTerm = '';
+
+const isSearched = searchTerm => item =>
+  item.title.toLowerCase().includes(searchTerm.toLowerCase());
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { list };
+    this.state = { list, searchTerm };
     this.onDismiss = this.onDismiss.bind(this);
+    this.onSearchChange = this.onSearchChange.bind(this);
   }
   
   onDismiss(id) {
     const updatedList = this.state.list.filter(item => item.objectID !== id);
     this.setState({ list: updatedList }); 
+  }
+  onSearchChange(event) {
+    this.setState({ searchTerm: event.target.value })
   }
   
   render() {
@@ -44,10 +52,15 @@ class App extends Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
         </header>
+
         <h2>{ helloWorld }</h2>
         <p>{username.firstName} {username.lastName}</p>
+        <form>
+          <input type="text"
+                 onChange={this.onSearchChange} />
+        </form>
         {
-          this.state.list.map(item =>
+          this.state.list.filter(isSearched(this.state.searchTerm)).map(item =>
               <div key={item.objectID}>
                 <span>
                   <a href={item.url}>{item.title}</a>
