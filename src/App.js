@@ -47,6 +47,7 @@ class App extends Component {
         firstName: 'Sheng',
         lastName: 'Yang',
     };
+    const { list, searchTerm} = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -60,7 +61,7 @@ class App extends Component {
                  onChange={this.onSearchChange} />
         </form>
         {
-          this.state.list.filter(isSearched(this.state.searchTerm)).map(item =>
+          list.filter(isSearched(searchTerm)).map(item =>
               <div key={item.objectID}>
                 <span>
                   <a href={item.url}>{item.title}</a>
