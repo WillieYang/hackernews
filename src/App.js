@@ -58,11 +58,11 @@ class App extends Component {
         <p>{ username.firstName } { username.lastName }</p>
         <Search
           value={ searchTerm }
-          onchange={this.onSearchChange}
+          onChange={this.onSearchChange}
         />
         <Table
           list={ list }
-          patter={ searchTerm }
+          pattern={ searchTerm }
           onDismiss={ this.onDismiss }
         />
         {/*<form>*/}
