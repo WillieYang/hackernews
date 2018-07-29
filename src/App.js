@@ -105,7 +105,7 @@ class App extends Component {
         lastName: 'Yang',
     };
     const { results, searchTerm, searchKey } = this.state;
-    const page = (results && results.searchKey && results.searchKey.page) || 0;
+    const page = (results && results[searchKey] && results[searchKey].page) || 0;
 
     const list = (results && results[searchKey] && results[searchKey].hits) || [];
     if(!results) { return null; }
