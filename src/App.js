@@ -2,32 +2,14 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-// const list = [
-//   {
-//     title: 'React',
-//     url: 'https://facebook.github.io/react/',
-//     author: 'Jordan Walke',
-//     num_comments: 3,
-//     points: 4,
-//     objectID: 0,
-//   },
-//   {
-//     title: 'Redux',
-//     url: 'https://github.com/react.js/redux',
-//     author: 'Dan Abramov, Andrew Clark',
-//     num_comments: 2,
-//     points: 5,
-//     objectID: 1,
-//   }
-// ];
-
 const DEFAULT_QUERY = 'redux';
 
 const PATH_BASE = 'https://hn.algolia.com/api/v1';
 const PATH_SEARCH = '/search';
 const PARAM_SEARCH = 'query=';
+const PARAM_PAGE = 'page=';
 
-const url = `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${DEFAULT_QUERY}`
+const url = `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${DEFAULT_QUERY}&${PARAM_PAGE};`
 
 const isSearched = searchTerm => item =>
   item.title.toLowerCase().includes(searchTerm.toLowerCase());
@@ -53,8 +35,8 @@ class App extends Component {
     this.setState({ result });
   }
 
-  fetchSearchTopStories(searchTerm) {
-    fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}`)
+  fetchSearchTopStories(searchTerm, page = 0) {
+    fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}`)
       .then(response => response.json())
       .then(result => this.setSearchTopStories(result))
       .catch(e => e);
@@ -90,6 +72,7 @@ class App extends Component {
         lastName: 'Yang',
     };
     const { result, searchTerm } = this.state;
+    const page = (result && result.page) || 0;
 
     if(!result) { return null; }
 
@@ -98,23 +81,30 @@ class App extends Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
         </header>
-
         <h2>{ helloWorld }</h2>
         <p>{ username.firstName } { username.lastName }</p>
-        <Search
-          value={ searchTerm }
-          onChange={this.onSearchChange}
-          onSubmit={this.onSearchSubmit}
-        > Search
-        </Search>
-        { result
-          ? <Table
-            list={ result.hits }
-            pattern={ searchTerm }
-            onDismiss={ this.onDismiss }
-          />
-          : null
-        }
+        <div className="interactions">
+          <Search
+            value={ searchTerm }
+            onChange={this.onSearchChange}
+            onSubmit={this.onSearchSubmit}
+          > Search
+          </Search>
+          { result
+            ? <Table
+              list={ result.hits }
+              pattern={ searchTerm }
+              onDismiss={ this.onDismiss }
+            />
+            : null
+          }
+        </div>
+        <div className="interactions">
+          <Button
+            onClick={() => this.fetchSearchTopStories(searchTerm, page + 1)}>
+            More
+          </Button>
+        </div>
       </div>
     );
   }
