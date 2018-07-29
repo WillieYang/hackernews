@@ -99,11 +99,14 @@ class App extends Component {
           onChange={this.onSearchChange}
         > Search
         </Search>
-        <Table
-          list={ result.hits }
-          pattern={ searchTerm }
-          onDismiss={ this.onDismiss }
-        />
+        { result
+          ? <Table
+            list={ result.hits }
+            pattern={ searchTerm }
+            onDismiss={ this.onDismiss }
+          />
+          : null
+        }
       </div>
     );
   }
