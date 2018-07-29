@@ -2,24 +2,24 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-const list = [
-  {
-    title: 'React',
-    url: 'https://facebook.github.io/react/',
-    author: 'Jordan Walke',
-    num_comments: 3,
-    points: 4,
-    objectID: 0,
-  },
-  {
-    title: 'Redux',
-    url: 'https://github.com/react.js/redux',
-    author: 'Dan Abramov, Andrew Clark',
-    num_comments: 2,
-    points: 5,
-    objectID: 1,
-  }
-];
+// const list = [
+//   {
+//     title: 'React',
+//     url: 'https://facebook.github.io/react/',
+//     author: 'Jordan Walke',
+//     num_comments: 3,
+//     points: 4,
+//     objectID: 0,
+//   },
+//   {
+//     title: 'Redux',
+//     url: 'https://github.com/react.js/redux',
+//     author: 'Dan Abramov, Andrew Clark',
+//     num_comments: 2,
+//     points: 5,
+//     objectID: 1,
+//   }
+// ];
 
 const DEFAULT_QUERY = 'redux';
 
@@ -37,7 +37,6 @@ class App extends Component {
     super(props);
 
     this.state = {
-      list,
       result: null,
       searchTerm: DEFAULT_QUERY,
     };
@@ -49,6 +48,7 @@ class App extends Component {
   }
 
   setSearchTopStories(result) {
+    console.log(result)
     this.setState({ result });
   }
 
@@ -65,8 +65,11 @@ class App extends Component {
   }
 
   onDismiss(id) {
-    const updatedList = this.state.list.filter(item => item.objectID !== id);
-    this.setState({ list: updatedList }); 
+    const isNotId = item => item.objectID !== id;
+    const updatedList = this.state.result.filter(isNotId);
+    this.setState({
+      result: Object.assign({}, this.state.result, {hits: updatedList})
+    });
   }
 
   onSearchChange(event) {
@@ -79,7 +82,10 @@ class App extends Component {
         firstName: 'Sheng',
         lastName: 'Yang',
     };
-    const { list, searchTerm } = this.state;
+    const { result, searchTerm } = this.state;
+
+    if(!result) { return null; }
+
     return (
       <div className="App">
         <header className="App-header">
@@ -94,7 +100,7 @@ class App extends Component {
         > Search
         </Search>
         <Table
-          list={ list }
+          list={ result.hits }
           pattern={ searchTerm }
           onDismiss={ this.onDismiss }
         />
