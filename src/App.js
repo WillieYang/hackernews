@@ -205,3 +205,9 @@ const smallColumn = {
 };
 
 export default App;
+
+export {
+  Button,
+  Search,
+  Table,
+};
