@@ -9,11 +9,12 @@ describe('App', () => {
     ReactDOM.render(<App />, div);
     ReactDOM.unmountComponentAtNode(div);
   });
-});
-test('has a valid snapshot', () => {
-  const component = renderer.create(
-    <App />
-  );
-  let tree = component.toJSON();
-  expect(tree).toMatchSnapshot();
+
+  test('has a valid snapshot', () => {
+    const component = renderer.create(
+      <App />
+    );
+    let tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
 });
