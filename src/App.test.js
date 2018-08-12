@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer';
+import Enzyme, { shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import App, { Search, Button, Table } from './App';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('App', () => {
 
@@ -43,6 +47,13 @@ describe('Button', () => {
     ReactDOM.render(<Button>Give me More</Button>, div);
   });
 
+  it('render button with enzyme', () => {
+    const element = shallow(
+      <Button>More Options</Button>
+    );
+    expect(element);
+  });
+
   test('has a valid snapshot', () => {
     const component = renderer.create(
       <Button>Give me More</Button>
@@ -64,6 +75,14 @@ describe('Table', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
     ReactDOM.render(<Table {...props} />, div);
+  });
+
+  it('shows two items in list', () => {
+    const element = shallow(
+      <Table {...props} />
+    );
+
+    expect(element.find('.table-row').length).toBe(2);
   });
 
   test('has a valid snapshot', () => {
