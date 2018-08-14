@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 import logo from './logo.svg';
 import './App.css';
 import fetch from 'isomorphic-fetch';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faStroopwafel, faSpinner } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faStroopwafel, faSpinner);
 
 const DEFAULT_QUERY = 'redux';
 const DEFAULT_HPP = '10';
@@ -256,7 +261,9 @@ Button.propTypes = {
 };
 
 const Loading = () =>
-  <div>Loading ...</div>
+  <div>
+    Loading ... <FontAwesomeIcon icon="spinner"/>
+  </div>
 
 const largeColumn = {
   width: '40%',
