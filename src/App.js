@@ -145,13 +145,11 @@ class App extends Component {
           />
         }
         <div className="interactions">
-          { isLoading
-            ? <Loading />
-            : <Button
+          <ButtonWithLoading>
+            isLoading={isLoading}
             onClick={() => this.fetchSearchTopStories(searchKey, page + 1)}>
             More
-            </Button>
-          }
+          </ButtonWithLoading>
         </div>
       </div>
     );
@@ -264,6 +262,13 @@ const Loading = () =>
   <div>
     Loading ... <FontAwesomeIcon icon="spinner"/>
   </div>
+
+const withLoading = (Component) => ( isLoading, ...rest ) =>
+  isLoading
+    ? <Loading />
+    : <Component {...rest} />
+
+const ButtonWithLoading = withLoading(Button);
 
 const largeColumn = {
   width: '40%',
