@@ -145,7 +145,7 @@ class App extends Component {
           />
         }
         <div className="interactions">
-          <ButtonWithLoading>
+          <ButtonWithLoading
             isLoading={isLoading}
             onClick={() => this.fetchSearchTopStories(searchKey, page + 1)}>
             More
@@ -263,7 +263,7 @@ const Loading = () =>
     Loading ... <FontAwesomeIcon icon="spinner"/>
   </div>
 
-const withLoading = (Component) => ( isLoading, ...rest ) =>
+const withLoading = (Component) => ({ isLoading, ...rest }) =>
   isLoading
     ? <Loading />
     : <Component {...rest} />
