@@ -7,7 +7,7 @@ import { sortBy } from 'lodash';
 import classNames from 'classnames';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStroopwafel, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { faStroopwafel, faSpinner, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faStroopwafel, faSpinner);
 
@@ -44,7 +44,7 @@ class App extends Component {
       error: null,
       isLoading: false,
       sortKey: 'NONE',
-      isSortReverse: false,
+      isSortReverse: null,
     };
 
     this.needsToSearchTopStories = this.needsToSearchTopStories.bind(this);
@@ -233,6 +233,7 @@ const Table = ({ list, sortKey, isSortReverse, onSort, onDismiss }) => {
           sortKey={'TITLE'}
           onSort={onSort}
           activeSortKey={sortKey}
+          isSortReverse={isSortReverse}
         >
           Title
         </Sort>
@@ -242,6 +243,7 @@ const Table = ({ list, sortKey, isSortReverse, onSort, onDismiss }) => {
           sortKey={'AUTHOR'}
           onSort={onSort}
           activeSortKey={sortKey}
+          isSortReverse={isSortReverse}
         >
           Author
         </Sort>
@@ -251,6 +253,7 @@ const Table = ({ list, sortKey, isSortReverse, onSort, onDismiss }) => {
           sortKey={'COMMENTS'}
           onSort={onSort}
           activeSortKey={sortKey}
+          isSortReverse={isSortReverse}
         >
           Comments
         </Sort>
@@ -260,6 +263,7 @@ const Table = ({ list, sortKey, isSortReverse, onSort, onDismiss }) => {
           sortKey={'POINTS'}
           onSort={onSort}
           activeSortKey={sortKey}
+          isSortReverse={isSortReverse}
         >
           Points
         </Sort>
@@ -339,19 +343,35 @@ const withLoading = (Component) => ({ isLoading, ...rest }) =>
 
 const ButtonWithLoading = withLoading(Button);
 
-const Sort = ({ sortKey, onSort, children, activeSortKey }) => {
+const Sort = ({ sortKey, onSort, children, activeSortKey, isSortReverse }) => {
+  console.log(`Value of isSortReverse: ${isSortReverse}`);
   const sortClass = classNames(
     'button-inline',
     { 'button-active': sortKey === activeSortKey }
   );
 
-  return (
-    <Button
-      onClick={() => onSort(sortKey)}
-      className={sortClass}>
-      {children}
-    </Button>
-  );
+  if(isSortReverse == null) {
+    return (
+      <Button
+        onClick={() => onSort(sortKey)}
+        className={sortClass}>
+        {children}
+      </Button>
+    );
+  } else {
+    return (
+      <Button
+        onClick={() => onSort(sortKey)}
+        className={sortClass}>
+        {children} <span> </span>
+        {
+          isSortReverse
+            ? <FontAwesomeIcon icon={faArrowUp}/>
+            : <FontAwesomeIcon icon={faArrowDown}/>
+        }
+      </Button>
+    );
+  }
 };
 
 const largeColumn = {
