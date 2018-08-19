@@ -344,7 +344,7 @@ const withLoading = (Component) => ({ isLoading, ...rest }) =>
 const ButtonWithLoading = withLoading(Button);
 
 const Sort = ({ sortKey, onSort, children, activeSortKey, isSortReverse }) => {
-  console.log(`Value of isSortReverse: ${isSortReverse}`);
+  // console.log(`Value of isSortReverse: ${isSortReverse}`);
   const sortClass = classNames(
     'button-inline',
     { 'button-active': sortKey === activeSortKey }
