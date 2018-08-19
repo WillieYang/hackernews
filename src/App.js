@@ -28,6 +28,27 @@ const SORTS = {
   POINTS: list => sortBy(list, 'points').reverse(),
 };
 
+const UpdateSearchTopStoreisState = (hits, page) => (prevState) => {
+  const { searchKey, results } = prevState;
+
+  const oldHits = results && results[searchKey]
+    ? results[searchKey].hits
+    : [];
+
+  const updateHits = [
+    ...oldHits,
+    ...hits
+  ];
+
+  return {
+    results: {
+      ...results,
+      [searchKey]: { hits: updateHits, page}
+    },
+    isLoading: false
+  };
+};
+
 // const url = `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${DEFAULT_QUERY}&${PARAM_PAGE}`;
 
 // const isSearched = searchTerm => item =>
@@ -59,43 +80,8 @@ class App extends Component {
 
   setSearchTopStories(result) {
     const { hits, page} = result;
-    // const { searchKey, results } = this.state;
-    // const oldHits = results && results[searchKey]
-    //   ? results[searchKey].hits
-    //   : [];
-    // const updateHits = [
-    //   ...oldHits,
-    //   ...hits
-    // ];
-    //
-    // this.setState({
-    //   results: {
-    //     ...results,
-    //     [searchKey]: { hits: updateHits, page}
-    //   },
-    //   isLoading: false
-    // });
 
-    this.setState(prevState => {
-      const { searchKey, results } = prevState;
-
-      const oldHits = results && results[searchKey]
-        ? results[searchKey].hits
-        : [];
-
-      const updateHits = [
-        ...oldHits,
-        ...hits
-      ];
-
-      return {
-        results: {
-          ...results,
-          [searchKey]: { hits: updateHits, page}
-        },
-        isLoading: false
-      };
-    });
+    this.setState(UpdateSearchTopStoreisState(hits, page));
   }
 
   fetchSearchTopStories(searchTerm, page = 0) {
@@ -114,16 +100,17 @@ class App extends Component {
   }
 
   onDismiss(id) {
-    const {searchKey, results} = this.state;
-    const {hits, page} = results[searchKey];
-
-    const isNotId = item => item.objectID !== id;
-    const updatedList = hits.filter(isNotId);
-    this.setState({
-      results: {
+    this.setState(prevState => {
+      const {searchKey, results} = prevState;
+      const {hits, page} = results[searchKey];
+      const isNotId = item => item.objectID !== id;
+      const updatedList = hits.filter(isNotId);
+      return {
+        results: {
         ...results,
-        [searchKey]: {hits: updatedList, page}
-      }
+            [searchKey]: {hits: updatedList, page}
+        }
+      };
     });
   }
 
@@ -186,30 +173,6 @@ class App extends Component {
     );
   }
 }
-
-// class Search extends Component {
-//   componentDidMount() {
-//     if(this.input) {
-//       this.input.focus();
-//     }
-//   }
-//   render() {
-//     const { value, onChange, onSubmit, children} = this.props;
-//     return (
-//       <form onSubmit={onSubmit}>
-//         <input
-//           type="text"
-//           value={value}
-//           onChange={onChange}
-//           ref={(node) => { this.input = node; }}
-//         />
-//         <button type="submit">
-//           {children}
-//         </button>
-//       </form>
-//     );
-//   }
-// }
 
 const Search = ({ value, onChange, children, onSubmit}) =>
   <form onSubmit={onSubmit}>
