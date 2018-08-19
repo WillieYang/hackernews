@@ -4,6 +4,7 @@ import logo from './logo.svg';
 import './App.css';
 import fetch from 'isomorphic-fetch';
 import { sortBy } from 'lodash';
+import classNames from 'classnames';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStroopwafel, faSpinner } from '@fortawesome/free-solid-svg-icons'
@@ -339,16 +340,15 @@ const withLoading = (Component) => ({ isLoading, ...rest }) =>
 const ButtonWithLoading = withLoading(Button);
 
 const Sort = ({ sortKey, onSort, children, activeSortKey }) => {
-  const sortClass = ['button-inline'];
-
-  if(sortKey === activeSortKey) {
-    sortClass.push('button-active');
-  }
+  const sortClass = classNames(
+    'button-inline',
+    { 'button-active': sortKey === activeSortKey }
+  );
 
   return (
     <Button
       onClick={() => onSort(sortKey)}
-      className={sortClass.join(' ')}>
+      className={sortClass}>
       {children}
     </Button>
   );
