@@ -1,26 +1,24 @@
 import React, { Component } from 'react';
 import logo from '../../logo.svg';
 import './index.css';
-import Search from '../Search/index'
-import Button from '../Button/index'
-import Table from '../Table/index'
+import Search from '../Search'
+import Button from '../Button'
+import Table from '../Table'
+import Loading from '../Loading'
+import {
+  PARAM_HPP,
+  DEFAULT_HPP,
+  DEFAULT_QUERY,
+  PARAM_PAGE,
+  PARAM_SEARCH,
+  PATH_BASE,
+  PATH_SEARCH } from '../../constants'
 
 import fetch from 'isomorphic-fetch';
-import { sortBy } from 'lodash';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStroopwafel, faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faStroopwafel, faSpinner);
-
-const DEFAULT_QUERY = 'redux';
-const DEFAULT_HPP = '10';
-
-const PATH_BASE = 'https://hn.algolia.com/api/v1';
-const PATH_SEARCH = '/search';
-const PARAM_SEARCH = 'query=';
-const PARAM_PAGE = 'page=';
-const PARAM_HPP = 'hitsPerPage=';
 
 const UpdateSearchTopStoriesState = (hits, page) => (prevState) => {
   const { searchKey, results } = prevState;
@@ -143,8 +141,8 @@ class App extends Component {
           <Search
             value={ searchTerm }
             onChange={this.onSearchChange}
-            onSubmit={this.onSearchSubmit}
-          > Search
+            onSubmit={this.onSearchSubmit}>
+            Search
           </Search>
         </div>
         { error
@@ -168,28 +166,11 @@ class App extends Component {
   }
 }
 
-const Loading = () =>
-  <div>
-    Loading ... <FontAwesomeIcon icon="spinner"/>
-  </div>
-
 const withLoading = (Component) => ({ isLoading, ...rest }) =>
   isLoading
     ? <Loading />
     : <Component {...rest} />
 
 const ButtonWithLoading = withLoading(Button);
-
-const largeColumn = {
-  width: '40%',
-};
-
-const middleColumn = {
-  width: '30%',
-};
-
-const smallColumn = {
-  width: '10%',
-};
 
 export default App;
