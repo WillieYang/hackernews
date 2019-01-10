@@ -28,7 +28,7 @@ const SORTS = {
   POINTS: list => sortBy(list, 'points').reverse(),
 };
 
-const UpdateSearchTopStoreisState = (hits, page) => (prevState) => {
+const UpdateSearchTopStoriesState = (hits, page) => (prevState) => {
   const { searchKey, results } = prevState;
 
   const oldHits = results && results[searchKey]
@@ -81,7 +81,7 @@ class App extends Component {
   setSearchTopStories(result) {
     const { hits, page} = result;
 
-    this.setState(UpdateSearchTopStoreisState(hits, page));
+    this.setState(UpdateSearchTopStoriesState(hits, page));
   }
 
   fetchSearchTopStories(searchTerm, page = 0) {
