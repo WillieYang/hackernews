@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
+import { startAction } from "../../actions/startAction";
+import { stopAction } from "../../actions/stopAction";
 import logo from '../../logo.svg';
 import './index.css';
 import Search from '../Search'
@@ -133,7 +136,15 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+          <img src={logo}
+               className={
+                 "App-logo" + (this.props.rotating ? "": " App-logo-paused ")
+               }
+               alt="logo"
+               onClick={
+                 this.props.rotating ? this.props.stopAction : this.props.startAction
+               }
+          />
         </header>
         <h2>{ helloWorld }</h2>
         <p>{ username.firstName } { username.lastName }</p>
@@ -173,4 +184,13 @@ const withLoading = (Component) => ({ isLoading, ...rest }) =>
 
 const ButtonWithLoading = withLoading(Button);
 
-export default App;
+const mapStateToProps = state => ({
+  ...state
+});
+
+const mapDispatchToProps = dispatch => ({
+  startAction: () => dispatch(startAction),
+  stopAction: () => dispatch(stopAction)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
