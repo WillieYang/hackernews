@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import { startAction } from "../../actions/startAction";
 import { stopAction } from "../../actions/stopAction";
+import rotateAction from '../../actions/rotateAction'
 import logo from '../../logo.svg';
 import './index.css';
 import Search from '../Search'
@@ -143,7 +144,7 @@ class App extends Component {
                }
                alt="logo"
                onClick={
-                 this.props.rotating ? this.props.stopAction : this.props.startAction
+                 () => this.props.rotateAction(!this.props.rotating)
                }
           />
         </header>
@@ -190,8 +191,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  startAction: () => dispatch(startAction),
-  stopAction: () => dispatch(stopAction)
+  rotateAction: (payload) => dispatch(rotateAction(payload))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
