@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+
 import { startAction } from "../../actions/startAction";
 import { stopAction } from "../../actions/stopAction";
 import logo from '../../logo.svg';
