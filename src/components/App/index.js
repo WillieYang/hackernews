@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 
-import { startAction } from "../../actions/startAction";
-import { stopAction } from "../../actions/stopAction";
+// import { startAction } from "../../actions/startAction";
+// import { stopAction } from "../../actions/stopAction";
 import rotateAction from '../../actions/rotateAction'
 import logo from '../../logo.svg';
 import './index.css';
