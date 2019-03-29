@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import { Route, Link } from "react-router-dom";
 
 // import { startAction } from "../../actions/startAction";
 // import { stopAction } from "../../actions/stopAction";
@@ -45,6 +46,24 @@ const UpdateSearchTopStoriesState = (hits, page) => (prevState) => {
     isLoading: false
   };
 };
+
+const Home = () => (
+  <div>
+    <h2>Home</h2>
+  </div>
+);
+
+const Category = () => (
+  <div>
+    <h2>Category</h2>
+  </div>
+);
+
+const Products = () => (
+  <div>
+    <h2>Products</h2>
+  </div>
+);
 
 // const url = `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${DEFAULT_QUERY}&${PARAM_PAGE}`;
 
@@ -150,6 +169,19 @@ class App extends Component {
         </header>
         <h2>{ helloWorld }</h2>
         <p>{ username.firstName } { username.lastName }</p>
+        <div>
+          <nav className="navbar navbar-light">
+            <ul className="nav navbar-nav">
+              <li><Link to="/home">Home</Link></li>
+              <li><Link to="/category">Category</Link></li>
+              <li><Link to="/products">Products</Link></li>
+            </ul>
+          </nav>
+          <Route path="/home" component={Home}/>
+          <Route path="/category" component={Category}/>
+          <Route path="/products" component={Products}/>
+        </div>
+        <br/>
         <div className="interactions">
           <Search
             value={ searchTerm }
