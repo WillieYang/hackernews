@@ -33,7 +33,7 @@
   },
   "huksy": {
     "hooks": {
-      "pre-commit": "NODE_ENV=production lint-staged",
+      "pre-commit": "npm test",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
