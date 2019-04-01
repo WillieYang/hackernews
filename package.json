@@ -23,7 +23,8 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "format": "prettier --write '**/*.{js,css,md}'",
-    "precommit": "lint-staged"
+//    "precommit": "lint-staged",
+    "lint-fix": "eslint --fix **/*.js"
   },
   "lint-staged": {
     "*.{js,jsx}": [

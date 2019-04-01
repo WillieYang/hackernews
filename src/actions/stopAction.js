@@ -1,4 +1,6 @@
-export const stopAction = {
-  type: "rotate",
-  payload: false
+const stopAction = {
+	type: 'rotate',
+	payload: false
 };
+
+export default stopAction;
