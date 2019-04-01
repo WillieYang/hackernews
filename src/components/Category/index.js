@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Route } from 'react-router-dom';
 
-const b = {
+const a = {
   "firstName": "sheng",
   "lastName": "yang"
 }
